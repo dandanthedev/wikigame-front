@@ -53,19 +53,16 @@
 	});
 
 	async function searchWikipedia(searchTerm) {
-		socket.emit('search', {
-			searchTerm,
-			language
-		});
-		const results = await new Promise((resolve) => {
-			socket.on('searchResults', (results) => {
-				resolve(results);
-			});
-			socket.on('searchError', (err) => {
-				alert(err);
-				resolve([]);
-			});
-		});
+		const res = await fetch(
+			`https://${language}.wikipedia.org/w/api.php?action=opensearch&origin=*&format=json&formatversion=2&search=${encodeURIComponent(
+				searchTerm
+			)}
+            &namespace=0&limit=5`
+		);
+
+		const json = await res.json();
+
+		const results = json[1] || [];
 
 		return results;
 	}

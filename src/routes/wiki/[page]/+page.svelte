@@ -118,8 +118,9 @@
 			console.log(`A: ${a.href}`);
 
 			if (
-				!a.href.startsWith(`http://${lang}.wikipedia.org/wiki/`) &&
-				!a.href.startsWith(`https://${lang}.wikipedia.org/wiki/`)
+				(!a.href.startsWith(`http://${lang}.wikipedia.org/wiki/`) &&
+					!a.href.startsWith(`https://${lang}.wikipedia.org/wiki/`)) ||
+				a.href.endsWith('&redlink=1')
 			)
 				disableElem(a);
 		}
