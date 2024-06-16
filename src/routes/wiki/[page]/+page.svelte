@@ -112,14 +112,14 @@
 			elem.style.color = 'red';
 		}
 
+		//remove <base> tag
+		const base = doc.getElementsByTagName('base')[0];
+		if (base) base.remove();
+
 		//loop through all a links
 		for (let a of doc.getElementsByTagName('a')) {
 			console.log(`A: ${a.href}`);
-			if (a.href.startsWith('./')) {
-				console.log(`HREF starts with ./`);
-				a.href = a.href.replace('./', `http://${lang}.wikipedia.org/wiki/`);
-				console.log(`NEW: ${a.href}`);
-			}
+
 			if (!a.href.startsWith(`http://${lang}.wikipedia.org/wiki/`)) disableElem(a);
 		}
 
