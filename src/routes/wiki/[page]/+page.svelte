@@ -87,7 +87,12 @@
 		searchTerm = '';
 
 		loading = true;
-		const response = await fetch(url);
+		const response = await fetch(url, {
+			headers: {
+				origin: 'http://localhost:3000',
+				referer: 'http://localhost:3000'
+			}
+		});
 		const data = await response.json();
 
 		console.log(data);
