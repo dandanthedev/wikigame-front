@@ -2,7 +2,7 @@
 	import Header from '$lib/Header.svelte';
 	import socket from '$lib/socket.js';
 	let nameInput = '';
-	let name;
+	let name = localStorage.getItem('name');
 	let joining = false;
 	let loading = false;
 	let pin = '';
@@ -30,6 +30,7 @@
 					name = nameInput;
 					nameInput = '';
 					socket.emit('name', name);
+					localStorage.setItem('name', name);
 				}}
 			>
 				<input type="text" placeholder="Name" maxlength="20" bind:value={nameInput} />

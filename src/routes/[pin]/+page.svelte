@@ -1,6 +1,6 @@
 <script>
-	import Header from '$lib/Header.svelte';
 	import socket from '$lib/socket.js';
+	import Header from '$lib/Header.svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 
@@ -71,7 +71,7 @@
 	}
 </script>
 
-<Header />
+<Header gameId={pin} lobby={true} />
 
 <h1 class="lobby">{pin}</h1>
 
@@ -89,6 +89,17 @@
 				socket.emit('language', {
 					pin,
 					language
+				});
+
+				sourceArticle = '';
+				destinationArticle = '';
+				socket.emit('sourceArticle', {
+					pin,
+					article: ''
+				});
+				socket.emit('destinationArticle', {
+					pin,
+					article: ''
 				});
 			}}
 		>
@@ -117,6 +128,7 @@
 						pin,
 						article: sourceArticle
 					});
+					sourceArticleResults = [];
 				}}
 			>
 				{#each sourceArticleResults as result}
@@ -146,6 +158,7 @@
 						pin,
 						article: destinationArticle
 					});
+					destinationArticleResults = [];
 				}}
 			>
 				{#each destinationArticleResults as result}

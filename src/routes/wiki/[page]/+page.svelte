@@ -23,7 +23,6 @@
 	socket.emit('exists', gameId);
 	socket.emit('isHost', gameId);
 	socket.emit('gameDetails', gameId);
-
 	socket.on('exists', (val) => {
 		if (!val) goto('/');
 	});
@@ -45,6 +44,7 @@
 		for (let a of document.body.getElementsByTagName('a')) {
 			a.addEventListener('click', (e) => {
 				e.preventDefault();
+				loading = true;
 				previousPage = pageParam;
 
 				pageParam = a.href.replace(`http://${lang}.wikipedia.org/wiki/`, '');
@@ -61,7 +61,6 @@
 				//END WIKIPEDIA IS STUPID FIXES
 
 				if (pageParam === destinationArticle) {
-					loading = true;
 					socket.emit('score', {
 						gameId,
 						clicks: i + 1,
@@ -188,7 +187,17 @@
 	});
 </script>
 
-<Header bind:inGame bind:i bind:loading bind:searchedThisPage bind:searchTerm bind:searchPage />
+<Header
+	bind:inGame
+	bind:i
+	bind:loading
+	bind:searchedThisPage
+	bind:searchTerm
+	bind:searchPage
+	bind:destinationArticle
+	bind:route
+	bind:gameId
+/>
 {#if processedPage && !loading && !err}
 	<h1>{pageParam.replaceAll('_', ' ')}</h1>
 	<div class="gameContent">
