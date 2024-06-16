@@ -86,7 +86,7 @@
 				class="giveUp"
 				on:click={() => {
 					socket.emit('leave', gameId);
-					goto('/');
+					location = '/';
 				}}>Leave</button
 			>
 		{/if}
