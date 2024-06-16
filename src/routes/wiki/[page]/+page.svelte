@@ -114,8 +114,11 @@
 
 		//loop through all a links
 		for (let a of doc.getElementsByTagName('a')) {
+			a = doc.getElementById(a.id);
 			if (a.href.startsWith('./')) {
+				console.log(`HREF starts with ./`);
 				a.href = a.href.replace('./', `http://${lang}.wikipedia.org/wiki/`);
+				console.log(`NEW: ${a.href}`);
 			}
 			if (!a.href.startsWith(`http://${lang}.wikipedia.org/wiki/`)) disableElem(a);
 		}
