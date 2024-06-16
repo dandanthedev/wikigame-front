@@ -65,7 +65,7 @@
 					socket.emit('score', {
 						gameId,
 						clicks: i + 1,
-						route: `${route} -> ${pageParam.replaceAll('_', ' ')}`
+						route
 					});
 					return;
 				}
@@ -147,7 +147,9 @@
 		//push entire page to processedPage
 		processedPage = doc.head.innerHTML + doc.body.innerHTML;
 		loading = false;
-		if (!loadingPreviousPage) route = `${route} -> ${pageParam.replaceAll('_', ' ')}`;
+		if (!loadingPreviousPage && route.length > 0)
+			route = `${route} -> ${pageParam.replaceAll('_', ' ')}`;
+		else if (route.length === 0) route = pageParam.replaceAll('_', ' ');
 
 		setTimeout(() => assignListeners(), 1);
 	}
