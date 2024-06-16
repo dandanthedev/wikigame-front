@@ -114,6 +114,7 @@
 
 		//loop through all a links
 		for (let a of doc.getElementsByTagName('a')) {
+			console.log(`A: ${a.href}`);
 			if (a.href.startsWith('./')) {
 				console.log(`HREF starts with ./`);
 				a.href = a.href.replace('./', `http://${lang}.wikipedia.org/wiki/`);
