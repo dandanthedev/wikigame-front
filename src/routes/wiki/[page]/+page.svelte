@@ -48,6 +48,8 @@
 				previousPage = pageParam;
 
 				pageParam = a.href.replace(`http://${lang}.wikipedia.org/wiki/`, '');
+				pageParam = pageParam.replace(`https://${lang}.wikipedia.org/wiki/`, '');
+				pageParam = pageParam.replace(`./`, '');
 
 				//START WIKIPEDIA IS STUPID FIXES
 
