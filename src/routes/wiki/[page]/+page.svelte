@@ -87,12 +87,7 @@
 		searchTerm = '';
 
 		loading = true;
-		const response = await fetch(url, {
-			headers: {
-				origin: 'http://localhost:3000',
-				referer: 'http://localhost:3000'
-			}
-		});
+		const response = await fetch(url);
 		const data = await response.json();
 
 		console.log(data);
@@ -119,6 +114,9 @@
 
 		//loop through all a links
 		for (let a of doc.getElementsByTagName('a')) {
+			if (a.href.startsWith('./')) {
+				a.href = a.href.replace('./', `http://${lang}.wikipedia.org/wiki/`);
+			}
 			if (!a.href.startsWith(`http://${lang}.wikipedia.org/wiki/`)) disableElem(a);
 		}
 
