@@ -112,15 +112,15 @@
 			elem.style.color = 'red';
 		}
 
-		//remove <base> tag
-		const base = doc.getElementsByTagName('base')[0];
-		if (base) base.remove();
-
 		//loop through all a links
 		for (let a of doc.getElementsByTagName('a')) {
 			console.log(`A: ${a.href}`);
 
-			if (!a.href.startsWith(`http://${lang}.wikipedia.org/wiki/`)) disableElem(a);
+			if (
+				!a.href.startsWith(`http://${lang}.wikipedia.org/wiki/`) &&
+				!a.href.startsWith(`https://${lang}.wikipedia.org/wiki/`)
+			)
+				disableElem(a);
 		}
 
 		const h2s = ['External_links', 'References', 'See_also'];
