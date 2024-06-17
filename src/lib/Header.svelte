@@ -26,6 +26,9 @@
 			}
 		}, 1000);
 	});
+	socket.on('gotoScores', () => {
+		goto('/' + gameId + '/scores');
+	});
 </script>
 
 {#if starting}

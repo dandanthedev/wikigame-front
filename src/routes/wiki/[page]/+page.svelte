@@ -35,10 +35,6 @@
 		destinationArticle = article;
 	});
 
-	socket.on('gotoScores', () => {
-		goto('/' + gameId + '/scores');
-	});
-
 	function assignListeners() {
 		//apply event listeners to all links
 		for (let a of document.body.getElementsByTagName('a')) {
