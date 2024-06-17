@@ -40,6 +40,11 @@ function listenToSockets() {
         alert(err);
         goto('/');
     });
+
+
+    socket.on('gameCreated', (pin) => {
+        socket.emit('join', pin);
+    });
 }
 
 if (!socketsListening) listenToSockets();

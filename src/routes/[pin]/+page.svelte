@@ -76,7 +76,10 @@
 <p class="users">{users.join(', ')}</p>
 
 <h2 class="objectiveHeader">Objective</h2>
-<p class="objective">{sourceArticle ?? 'None'} to {destinationArticle ?? 'None'} ({language})</p>
+<p class="objective">
+	{sourceArticle?.replaceAll('_', ' ') ?? 'None'} to {destinationArticle?.replaceAll('_', ' ') ??
+		'None'} ({language})
+</p>
 
 {#if host}
 	<div class="language">
@@ -120,7 +123,29 @@
 		{#if sourceArticleResults.length > 0}
 			<select
 				bind:value={sourceArticle}
-				on:change={() => {
+				on:change={async () => {
+					const res = await fetch(
+						`https://${language}.wikipedia.org/w/api.php?redirects=1&format=json&origin=*&action=parse&prop=displaytitle&page=${encodeURIComponent(
+							sourceArticle
+						)}`
+					);
+
+					const json2 = await res.json();
+
+					const exists = json2?.parse?.displaytitle?.length > 0;
+					const redirects = json2?.parse?.redirects || [];
+					if (!exists) {
+						sourceArticle = '';
+						return alert(
+							'This article does not exist, dont ask me why Wikipedia does this sometimes :D'
+						);
+					}
+
+					if (redirects?.length > 0) {
+						const lastRedirect = redirects[redirects.length - 1];
+						sourceArticle = lastRedirect.to;
+					}
+
 					socket.emit('sourceArticle', {
 						pin,
 						article: sourceArticle
@@ -150,7 +175,45 @@
 		{#if destinationArticleResults.length > 0}
 			<select
 				bind:value={destinationArticle}
-				on:change={() => {
+				on:change={async () => {
+					const res = await fetch(
+						`https://${language}.wikipedia.org/w/api.php?redirects=1&format=json&origin=*&action=parse&prop=displaytitle&page=${encodeURIComponent(
+							destinationArticle
+						)}`
+					);
+
+					const json = await res.json();
+
+					const exists = json?.parse?.displaytitle?.length > 0;
+					const redirects = json?.parse?.redirects || [];
+					if (!exists) {
+						destinationArticle = '';
+
+						return alert(
+							'This article does not exist, dont ask me why Wikipedia does this sometimes :D'
+						);
+					}
+
+					if (redirects?.length > 0) {
+						const lastRedirect = redirects[redirects.length - 1];
+						destinationArticle = lastRedirect.to;
+					}
+
+					const res2 = await fetch(
+						`https://${language}.wikipedia.org/w/api.php?action=query&origin=*&format=json&prop=pageprops&ppprop=disambiguation&titles=${encodeURIComponent(destinationArticle)}&formatversion=2`
+					);
+
+					const json2 = await res2.json();
+
+					const disambiguation = json2?.query?.pages[0]?.pageprops?.disambiguation;
+
+					if (disambiguation === '') {
+						return alert(
+							'This article is a disambiguation page and is impossible to reach. Please select a more specific article.'
+						);
+						destinationArticle = '';
+					}
+
 					socket.emit('destinationArticle', {
 						pin,
 						article: destinationArticle

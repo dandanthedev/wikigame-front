@@ -11,10 +11,6 @@
 		alert(err);
 		loading = false;
 	});
-
-	socket.on('gameCreated', (pin) => {
-		socket.emit('join', pin);
-	});
 </script>
 
 <Header />

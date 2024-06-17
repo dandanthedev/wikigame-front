@@ -46,6 +46,7 @@
 				pageParam = a.href.replace(`http://${lang}.wikipedia.org/wiki/`, '');
 				pageParam = pageParam.replace(`https://${lang}.wikipedia.org/wiki/`, '');
 				pageParam = pageParam.replace(`./`, '');
+				pageParam = decodeURIComponent(pageParam);
 
 				//START WIKIPEDIA IS STUPID FIXES
 
@@ -60,7 +61,7 @@
 					socket.emit('score', {
 						gameId,
 						clicks: i + 1,
-						route
+						route: `${route} -> ${pageParam.replaceAll('_', ' ')} 🏁`
 					});
 					return;
 				}

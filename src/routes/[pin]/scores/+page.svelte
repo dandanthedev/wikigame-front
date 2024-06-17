@@ -43,9 +43,8 @@
 	href="/"
 	class="leaveButton"
 	on:click|preventDefault={() => {
-		socket.emit('leave', gameId);
-		location = '/';
-	}}>Leave</a
+		socket.emit('newLobby', gameId);
+	}}>New game</a
 >
 
 <style>
