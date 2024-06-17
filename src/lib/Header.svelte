@@ -66,7 +66,10 @@
 				on:click={() => {
 					//ask for new name
 					const newName = prompt('Please enter a new name', $name);
-					if (newName) socket.emit('name', newName);
+					if (newName) {
+						socket.emit('name', newName);
+						localStorage.setItem('name', newName);
+					}
 				}}
 			>
 				{$name}
