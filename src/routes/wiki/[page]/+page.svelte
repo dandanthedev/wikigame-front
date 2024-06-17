@@ -72,7 +72,7 @@
 	}
 
 	function getURL() {
-		return `https://api.wikimedia.org/core/v1/wikipedia/${lang}/page/${pageParam}/with_html`;
+		return `https://api.wikimedia.org/core/v1/wikipedia/${lang}/page/${pageParam}/with_html?redirects=1&disableeditsection=true`;
 	}
 	let url = getURL();
 	let processedPage;
