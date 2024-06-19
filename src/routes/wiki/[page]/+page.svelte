@@ -116,7 +116,8 @@
 
 			if (
 				(!a.href.startsWith(`http://${lang}.wikipedia.org/wiki/`) &&
-					!a.href.startsWith(`https://${lang}.wikipedia.org/wiki/`)) ||
+					!a.href.startsWith(`https://${lang}.wikipedia.org/wiki/`) &&
+					!a.href.startsWith(`${window.location.host}/wiki/`)) ||
 				a.href.endsWith('&redlink=1')
 			)
 				disableElem(a);
