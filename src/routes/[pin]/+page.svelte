@@ -12,6 +12,7 @@
 
 	let destinationArticleResults = [];
 	let sourceArticleResults = [];
+	let destinationArticleSearchInput;
 
 	let users = [];
 
@@ -116,7 +117,7 @@
 				const curVal = e.target.value;
 				setTimeout(async () => {
 					if (curVal !== sourceArticleSearch) return;
-					sourceArticleResults = await searchWikipedia(curVal, 'search');
+					sourceArticleResults = await searchWikipedia(curVal);
 				}, 300);
 			}}
 		/>
@@ -164,11 +165,12 @@
 			type="text"
 			placeholder="Destination article"
 			bind:value={destinationArticleSearch}
+			bind:this={destinationArticleSearchInput}
 			on:keyup={async (e) => {
 				const curVal = e.target.value;
 				setTimeout(async () => {
 					if (curVal !== destinationArticleSearch) return;
-					destinationArticleResults = await searchWikipedia(curVal, 'search');
+					destinationArticleResults = await searchWikipedia(curVal);
 				}, 300);
 			}}
 		/>
@@ -208,14 +210,18 @@
 					const disambiguation = json2?.query?.pages[0]?.pageprops?.disambiguation;
 
 					if (disambiguation === '') {	
+						destinationArticleSearch = `${destinationArticle} (`;
 						destinationArticle = '';
 						socket.emit('destinationArticle', {
 							pin,
 							article: destinationArticle
 						});
-						return alert(
+					
+						 alert(
 							'This article is a disambiguation page and is impossible to reach. Please select a more specific article.'
 						);
+						 destinationArticleResults = await searchWikipedia(destinationArticleSearch);
+						return;
 					
 					}
 
