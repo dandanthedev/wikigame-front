@@ -105,7 +105,8 @@
 			}}
 		>
 			<option value="en">English</option>
-			<option value="nl">Dutch</option>
+			<option value="nl">Nederlands</option>
+			<option value="ru">Russia</option>
 		</select>
 	</div>
 	<div class="sourceArticle">
@@ -209,20 +210,19 @@
 
 					const disambiguation = json2?.query?.pages[0]?.pageprops?.disambiguation;
 
-					if (disambiguation === '') {	
+					if (disambiguation === '') {
 						destinationArticleSearch = `${destinationArticle} (`;
 						destinationArticle = '';
 						socket.emit('destinationArticle', {
 							pin,
 							article: destinationArticle
 						});
-					
-						 alert(
+
+						alert(
 							'This article is a disambiguation page and is impossible to reach. Please select a more specific article.'
 						);
-						 destinationArticleResults = await searchWikipedia(destinationArticleSearch);
+						destinationArticleResults = await searchWikipedia(destinationArticleSearch);
 						return;
-					
 					}
 
 					socket.emit('destinationArticle', {

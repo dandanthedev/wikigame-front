@@ -43,17 +43,8 @@
 				loading = true;
 				previousPage = pageParam;
 
-				pageParam = a.href.split("/wiki/")[1]; //als dit niet werkt dan paniek
+				pageParam = a.href.split('/wiki/')[1]; //als dit niet werkt dan paniek
 				pageParam = decodeURIComponent(pageParam);
-
-				//START WIKIPEDIA IS STUPID FIXES
-
-				//if pageparam ends with (hoofdbetekenis), remove it (for nl)
-				if (pageParam.endsWith('(hoofdbetekenis)')) {
-					pageParam = pageParam.replace('_(hoofdbetekenis)', '');
-				}
-
-				//END WIKIPEDIA IS STUPID FIXES
 
 				if (pageParam === destinationArticle) {
 					socket.emit('score', {
@@ -84,10 +75,12 @@
 
 		loading = true;
 
-		const redCheck = await fetch(`https://${lang}.wikipedia.org/w/api.php?redirects=1&format=json&origin=*&action=parse&prop=displaytitle&page=${pageParam}`);
+		const redCheck = await fetch(
+			`https://${lang}.wikipedia.org/w/api.php?redirects=1&format=json&origin=*&action=parse&prop=displaytitle&page=${pageParam}`
+		);
 		const redCheckData = await redCheck.json();
 
-		if(redCheckData.parse.redirects.length > 0) {
+		if (redCheckData.parse.redirects.length > 0) {
 			const last = redCheckData.parse.redirects[redCheckData.parse.redirects.length - 1];
 			pageParam = last.to.replaceAll(' ', '_');
 			url = getURL();
@@ -124,10 +117,9 @@
 		const base = doc.getElementsByTagName('base')[0];
 		if (base) base.parentNode.removeChild(base);
 
-
 		//loop through all a links
 		for (let a of doc.getElementsByTagName('a')) {
-			console.log(a.href)
+			console.log(a.href);
 			a.href = a.href.replace(`http://${window.location.host}`, `https://${lang}.wikipedia.org`);
 			a.href = a.href.replace(`https://${window.location.host}`, `https://${lang}.wikipedia.org`);
 			if (
@@ -158,13 +150,17 @@
 			if (table.classList.contains('sidebar')) table.style.display = 'none';
 		}
 
-
 		//loop through all link tags
 		for (let link of doc.getElementsByTagName('link')) {
-			link.href = link.href.replace(`http://${window.location.host}`, `https://${lang}.wikipedia.org`);
-			link.href = link.href.replace(`https://${window.location.host}`, `https://${lang}.wikipedia.org`);
+			link.href = link.href.replace(
+				`http://${window.location.host}`,
+				`https://${lang}.wikipedia.org`
+			);
+			link.href = link.href.replace(
+				`https://${window.location.host}`,
+				`https://${lang}.wikipedia.org`
+			);
 		}
-
 
 		//push entire page to processedPage
 		processedPage = doc.head.innerHTML + doc.body.innerHTML;

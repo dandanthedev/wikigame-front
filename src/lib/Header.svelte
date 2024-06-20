@@ -26,7 +26,6 @@
 			}
 		}, 1000);
 	});
-
 </script>
 
 {#if starting}
@@ -37,7 +36,7 @@
 {/if}
 
 <div class="gameHeader">
-	<h1 class="gameTitle">WikiGame</h1>
+	<h1 class="gameTitle" onclick="location='/'">WikiGame</h1>
 
 	{#if inGame}
 		<div class="search">
@@ -210,34 +209,30 @@
 		.search {
 			margin-left: 0;
 		}
-		.note{
+		.note {
 			text-align: center;
 		}
 
-	.right{
-	text-align: center;
-	align-items: center;
-	justify-content: center;
-	gap: 1rem;
-	
-	}
+		.right {
+			text-align: center;
+			align-items: center;
+			justify-content: center;
+			gap: 1rem;
+		}
 
-	.giveUp{
-	/*new line*/
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 70%;
-	}
+		.giveUp {
+			/*new line*/
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			width: 70%;
+		}
 
-	.destination{
-		width: 100%;
-	}
-	.clicks{
-		width: 100%;
-	}
-
-	
-
+		.destination {
+			width: 100%;
+		}
+		.clicks {
+			width: 100%;
+		}
 	}
 </style>

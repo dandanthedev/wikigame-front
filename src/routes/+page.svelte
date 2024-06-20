@@ -14,7 +14,7 @@
 </script>
 
 <Header />
-<h1 class="gameTitle">WikiGame</h1>
+<h1 class="gameTitle" onclick="location='/'">WikiGame</h1>
 <p class="gameDescription">
 	In WikiGame, you navigate from a source and to a destination by clicking on WikiLinks.
 </p>
