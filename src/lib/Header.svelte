@@ -43,11 +43,14 @@
 		<div class="search">
 			<input
 				type="text"
-				placeholder="Search..."
+				placeholder={!searchedThisPage ? 'Search...' : 'Results highlighted'}
 				class="searchInput"
 				bind:value={searchTerm}
 				on:keyup={(e) => {
-					if (e.key === 'Enter') searchPage();
+					if (e.key === 'Enter') {
+						searchTerm = '';
+						searchPage();
+					}
 				}}
 				disabled={loading || searchedThisPage}
 			/>
@@ -58,7 +61,7 @@
 		</div>
 	{/if}
 	<div class="right">
-		{#if $name}
+		{#if $name && !inGame}
 			<button
 				class="name"
 				on:click={() => {
@@ -197,5 +200,45 @@
 		border-radius: 0.5rem;
 		border: none;
 		cursor: pointer;
+	}
+
+	@media (max-width: 1233px) {
+		.gameHeader {
+			flex-direction: column;
+			padding-bottom: 1rem;
+		}
+		.search {
+			margin-left: 0;
+			margin-top: 1rem;
+		}
+		.note{
+			text-align: center;
+		}
+
+	.right{
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	
+	}
+
+	.giveUp{
+	/*new line*/
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+	}
+
+	.destination{
+		width: 100%;
+	}
+	.clicks{
+		width: 100%;
+	}
+
+	
+
 	}
 </style>
