@@ -43,9 +43,7 @@
 				loading = true;
 				previousPage = pageParam;
 
-				pageParam = a.href.replace(`http://${lang}.wikipedia.org/wiki/`, '');
-				pageParam = pageParam.replace(`https://${lang}.wikipedia.org/wiki/`, '');
-				pageParam = pageParam.replace(`./`, '');
+				pageParam = a.href.split("/wiki/")[1]; //als dit niet werkt dan paniek
 				pageParam = decodeURIComponent(pageParam);
 
 				//START WIKIPEDIA IS STUPID FIXES
