@@ -108,10 +108,16 @@
 			elem.style.color = 'red';
 		}
 
+		//remove base tag
+		const base = doc.getElementsByTagName('base')[0];
+		if (base) base.parentNode.removeChild(base);
+
+
 		//loop through all a links
 		for (let a of doc.getElementsByTagName('a')) {
-			console.log(`A: ${a.href}`);
-
+			console.log(a.href)
+			a.href = a.href.replace(`http://${window.location.host}`, `https://${lang}.wikipedia.org`);
+			a.href = a.href.replace(`https://${window.location.host}`, `https://${lang}.wikipedia.org`);
 			if (
 				(!a.href.startsWith(`http://${lang}.wikipedia.org/wiki/`) &&
 					!a.href.startsWith(`https://${lang}.wikipedia.org/wiki/`) &&
@@ -139,6 +145,14 @@
 		for (let table of doc.getElementsByTagName('table')) {
 			if (table.classList.contains('sidebar')) table.style.display = 'none';
 		}
+
+
+		//loop through all link tags
+		for (let link of doc.getElementsByTagName('link')) {
+			link.href = link.href.replace(`http://${window.location.host}`, `https://${lang}.wikipedia.org`);
+			link.href = link.href.replace(`https://${window.location.host}`, `https://${lang}.wikipedia.org`);
+		}
+
 
 		//push entire page to processedPage
 		processedPage = doc.head.innerHTML + doc.body.innerHTML;
