@@ -45,6 +45,10 @@ function listenToSockets() {
     socket.on('gameCreated', (pin) => {
         socket.emit('join', pin);
     });
+
+    socket.on('gotoScores', (theGame) => {
+        goto('/' + theGame + '/scores');
+    });
 }
 
 if (!socketsListening) listenToSockets();
