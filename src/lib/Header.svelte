@@ -209,7 +209,6 @@
 		}
 		.search {
 			margin-left: 0;
-			margin-top: 1rem;
 		}
 		.note{
 			text-align: center;
