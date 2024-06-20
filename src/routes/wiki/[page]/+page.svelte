@@ -71,7 +71,7 @@
 	}
 
 	function getURL() {
-		return `https://api.wikimedia.org/core/v1/wikipedia/${lang}/page/${pageParam}/with_html?redirects=1&disableeditsection=true`;
+		return `https://api.wikimedia.org/core/v1/wikipedia/${lang}/page/${pageParam}/with_html?redirects=0&disableeditsection=true`;
 	}
 	let url = getURL();
 	let processedPage;
@@ -83,6 +83,18 @@
 		searchTerm = '';
 
 		loading = true;
+
+		const redCheck = await fetch(`https://${lang}.wikipedia.org/w/api.php?redirects=1&format=json&origin=*&action=parse&prop=displaytitle&page=${pageParam}`);
+		const redCheckData = await redCheck.json();
+
+		if(redCheckData.parse.redirects.length > 0) {
+			const last = redCheckData.parse.redirects[redCheckData.parse.redirects.length - 1];
+			pageParam = last.to;
+			url = getURL();
+			loadPage(true);
+			return;
+		}
+
 		const response = await fetch(url);
 		const data = await response.json();
 
