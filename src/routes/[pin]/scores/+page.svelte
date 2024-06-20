@@ -27,7 +27,7 @@
 	socket.on('scores', (newScores) => {
 		scores = newScores;
 		//sort scores by clicks
-		scores.sort((a, b) => b.clicks - a.clicks);
+		scores = scores.sort((a, b) => b.clicks - a.clicks);
 
 		//remove first 3 elements from array
 		notTopScores = scores.slice(3);
@@ -47,12 +47,12 @@
 <h1 class="scoresHeader">Scores</h1>
 <div class="topScores">
 	{#if scores.length > 1}
-	<div class="top top2">
-		<h2 class="placement">2nd</h2>
-		<h3 class="name">{scores[1].name}</h3>
-		<p class="clicks">Clicks: {scores[1].clicks}</p>
-		<p class="route">{scores[1].route}</p>
-	</div>
+		<div class="top top2">
+			<h2 class="placement">2nd</h2>
+			<h3 class="name">{scores[1].name}</h3>
+			<p class="clicks">Clicks: {scores[1].clicks}</p>
+			<p class="route">{scores[1].route}</p>
+		</div>
 	{/if}
 	<div class="top top1">
 		<h2 class="placement">1st</h2>
@@ -61,13 +61,12 @@
 		<p class="route">{scores[0]?.route}</p>
 	</div>
 	{#if scores.length > 2}
-	<div class="top top3">
-		<h2 class="placement">3rd</h2>
-		<h3 class="name">{scores[2].name}</h3>
-		<p class="clicks">Clicks: {scores[2].clicks}</p>
-		<p class="route">{scores[2].route}</p>
-		
-	</div>
+		<div class="top top3">
+			<h2 class="placement">3rd</h2>
+			<h3 class="name">{scores[2].name}</h3>
+			<p class="clicks">Clicks: {scores[2].clicks}</p>
+			<p class="route">{scores[2].route}</p>
+		</div>
 	{/if}
 </div>
 
@@ -81,9 +80,15 @@
 	</div>
 {/each}
 
-<p class="notFinished">{nonFinishedUsers.length} user{#if nonFinishedUsers.length > 1 || nonFinishedUsers.length === 0}s{/if}
-		{#if nonFinishedUsers.length === 1} is {:else} are {/if}
-	still playing</p>
+<p class="notFinished">
+	{nonFinishedUsers.length} user{#if nonFinishedUsers.length > 1 || nonFinishedUsers.length === 0}s{/if}
+	{#if nonFinishedUsers.length === 1}
+		is
+	{:else}
+		are
+	{/if}
+	still playing
+</p>
 <p class="notFinishedUsers">{nonFinishedUsers.join(', ')}</p>
 
 <a
@@ -116,10 +121,9 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		
+
 		gap: 1rem;
 		margin-bottom: 0;
-
 	}
 
 	.name {
@@ -156,75 +160,70 @@
 		text-align: center;
 	}
 
-
 	.topScores {
 		display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
+		flex-direction: row;
+		justify-content: space-evenly;
+	}
 
-  .top {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-	border-radius: 10px;
-	max-width: 20rem;
+	.top {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		border-radius: 10px;
+		max-width: 20rem;
 
-	padding-bottom: 2rem;
-  }
+		padding-bottom: 2rem;
+	}
 
-  .top2 {
+	.top2 {
 		background-color: #f5f5f5;
-  }
+	}
 
-  .top3 {
+	.top3 {
 		background-color: #e3f2fd;
-  }
+	}
 
-  .top1 {
+	.top1 {
 		background-color: #e9e3f4;
-  }
-.placement{
-	color: black;
-	font-size: 3rem;
-	font-family: sans-serif;
-margin-bottom: 0.5rem;
-}
-.name{
-	color: black;
-	font-size: 1.5rem;
-	font-family: sans-serif;
-margin-bottom: 0.5rem;
-}
+	}
+	.placement {
+		color: black;
+		font-size: 3rem;
+		font-family: sans-serif;
+		margin-bottom: 0.5rem;
+	}
+	.name {
+		color: black;
+		font-size: 1.5rem;
+		font-family: sans-serif;
+		margin-bottom: 0.5rem;
+	}
 
-.clicks{
-	color: black;
-font-size: 1rem;
-font-family: sans-serif;
-}
+	.clicks {
+		color: black;
+		font-size: 1rem;
+		font-family: sans-serif;
+	}
 
-.notTopName{
-	color: black;
-font-size: 1.3rem;
-font-family: sans-serif;
-}
+	.notTopName {
+		color: black;
+		font-size: 1.3rem;
+		font-family: sans-serif;
+	}
 
-
-.notFinished{
-	color: black;
-	font-size: 1rem;
-	font-family: sans-serif;
-	text-align: center;
-}
-.notFinishedUsers{
-	color: grey;
-	font-size: 0.8rem;
-	font-family: sans-serif;
-	text-align: center;
-
-}
-
-
+	.notFinished {
+		color: black;
+		font-size: 1rem;
+		font-family: sans-serif;
+		text-align: center;
+	}
+	.notFinishedUsers {
+		color: grey;
+		font-size: 0.8rem;
+		font-family: sans-serif;
+		text-align: center;
+	}
 </style>
