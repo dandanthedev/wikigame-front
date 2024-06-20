@@ -47,7 +47,7 @@ function listenToSockets() {
     });
 
     socket.on('gotoScores', (theGame) => {
-        goto(`https://${window.location.host}/${theGame}/scores`);
+        goto(`/${theGame}/scores`);
     });
 }
 

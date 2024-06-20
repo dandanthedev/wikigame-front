@@ -80,7 +80,6 @@
 				class="giveUp"
 				on:click={() => {
 					socket.emit('giveUp', gameId);
-					goto('/' + gameId + '/scores');
 				}}>Give up</button
 			>
 		{/if}
