@@ -89,7 +89,7 @@
 
 		if(redCheckData.parse.redirects.length > 0) {
 			const last = redCheckData.parse.redirects[redCheckData.parse.redirects.length - 1];
-			pageParam = last.to;
+			pageParam = last.to.replaceAll(' ', '_');
 			url = getURL();
 			loadPage(true);
 			return;

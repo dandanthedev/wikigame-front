@@ -207,11 +207,16 @@
 
 					const disambiguation = json2?.query?.pages[0]?.pageprops?.disambiguation;
 
-					if (disambiguation === '') {
+					if (disambiguation === '') {	
+						destinationArticle = '';
+						socket.emit('destinationArticle', {
+							pin,
+							article: destinationArticle
+						});
 						return alert(
 							'This article is a disambiguation page and is impossible to reach. Please select a more specific article.'
 						);
-						destinationArticle = '';
+					
 					}
 
 					socket.emit('destinationArticle', {

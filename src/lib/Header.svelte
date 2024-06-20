@@ -75,7 +75,7 @@
 		{/if}
 		{#if inGame}
 			<p class="clicks">Clicks: {i}</p>
-			<p class="destination">Destination: {destinationArticle.replaceAll('_', ' ')}</p>
+			<p class="destination">Destination: {destinationArticle?.replaceAll('_', ' ')}</p>
 			<button
 				class="giveUp"
 				on:click={() => {
