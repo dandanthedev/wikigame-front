@@ -26,9 +26,8 @@
 
 	socket.on('scores', (newScores) => {
 		scores = newScores;
-		//sort scores by clicks
-		scores = scores.sort((a, b) => b.clicks - a.clicks);
-
+		//sort scores by least clicks first
+		scores.sort((a, b) => b.clicks - a.clicks);
 		//remove first 3 elements from array
 		notTopScores = scores.slice(3);
 
