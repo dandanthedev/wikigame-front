@@ -46,14 +46,6 @@
 				pageParam = a.href.split('/wiki/')[1]; //als dit niet werkt dan paniek
 				pageParam = decodeURIComponent(pageParam);
 
-				if (pageParam === destinationArticle) {
-					socket.emit('score', {
-						gameId,
-						clicks: i + 1,
-						route: `${route} -> ${pageParam.replaceAll('_', ' ')} 🏁`
-					});
-					return;
-				}
 				url = getURL();
 				loadPage();
 				i += 1;
@@ -169,6 +161,15 @@
 		if (updateRoute)
 			if (route.length > 0) route = `${route} -> ${pageParam.replaceAll('_', ' ')}`;
 			else if (route.length === 0) route = pageParam.replaceAll('_', ' ');
+
+		if (pageParam === destinationArticle) {
+			socket.emit('score', {
+				gameId,
+				clicks: i + 1,
+				route: `${route} -> ${pageParam.replaceAll('_', ' ')} 🏁`
+			});
+			return;
+		}
 
 		setTimeout(() => assignListeners(), 1);
 	}
