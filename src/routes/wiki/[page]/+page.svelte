@@ -80,6 +80,14 @@
 			return;
 		}
 
+		if (pageParam === destinationArticle) {
+			socket.emit('score', {
+				gameId,
+				clicks: i + 1,
+				route: `${route} -> ${pageParam.replaceAll('_', ' ')} 🏁`
+			});
+		}
+
 		const response = await fetch(url);
 		const data = await response.json();
 
@@ -161,15 +169,6 @@
 		if (updateRoute)
 			if (route.length > 0) route = `${route} -> ${pageParam.replaceAll('_', ' ')}`;
 			else if (route.length === 0) route = pageParam.replaceAll('_', ' ');
-
-		if (pageParam === destinationArticle) {
-			socket.emit('score', {
-				gameId,
-				clicks: i + 1,
-				route: `${route} -> ${pageParam.replaceAll('_', ' ')} 🏁`
-			});
-			return;
-		}
 
 		setTimeout(() => assignListeners(), 1);
 	}
