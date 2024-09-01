@@ -20,10 +20,13 @@
 	let host = false;
 
 	function harrassSocket() {
-		socket.emit('exists', pin);
-		socket.emit('isHost', pin);
-		socket.emit('getUsers', pin);
-		socket.emit('gameDetails', pin);
+		socket.emit('join', pin);
+		setTimeout(() => {
+			socket.emit('exists', pin);
+			socket.emit('isHost', pin);
+			socket.emit('getUsers', pin);
+			socket.emit('gameDetails', pin);
+		}, 1000);
 	}
 
 	socket.on('reconnect', () => harrassSocket());

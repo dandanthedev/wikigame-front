@@ -25,7 +25,10 @@
 				on:submit|preventDefault={() => {
 					name = nameInput;
 					nameInput = '';
-					socket.emit('name', name);
+					socket.emit('signOn', {
+						name,
+						id: localStorage.getItem('id')
+					});
 					localStorage.setItem('name', name);
 				}}
 			>
@@ -54,7 +57,7 @@
 			<form
 				on:submit|preventDefault={() => {
 					loading = true;
-					socket.emit('join', pin);
+					socket.emit('discoverGame', pin);
 				}}
 			>
 				<input type="text" placeholder="Pin" maxlength="6" bind:value={pin} disabled={loading} />

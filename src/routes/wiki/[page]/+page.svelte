@@ -20,9 +20,14 @@
 
 	let route = '';
 
-	socket.emit('exists', gameId);
-	socket.emit('isHost', gameId);
-	socket.emit('gameDetails', gameId);
+	setTimeout(() => {
+		socket.emit('join', gameId);
+	}, 100); //ensure join, todo: better solution
+	setTimeout(() => {
+		socket.emit('exists', gameId);
+		socket.emit('isHost', gameId);
+		socket.emit('gameDetails', gameId);
+	}, 1000);
 	socket.on('exists', (val) => {
 		if (!val) goto('/');
 	});
@@ -33,6 +38,11 @@
 
 	socket.on('destinationArticle', (article) => {
 		destinationArticle = article;
+	});
+
+	socket.on('route', (data) => {
+		i = data.clicks;
+		route = data.route;
 	});
 
 	function assignListeners() {
@@ -83,7 +93,7 @@
 		if (pageParam === destinationArticle) {
 			socket.emit('score', {
 				gameId,
-				clicks: i + 1,
+				clicks: i,
 				route: `${route} -> ${pageParam.replaceAll('_', ' ')} 🏁`
 			});
 		}
@@ -166,11 +176,20 @@
 		processedPage = doc.head.innerHTML + doc.body.innerHTML;
 		loading = false;
 
-		if (updateRoute)
+		if (updateRoute) {
 			if (route.length > 0) route = `${route} -> ${pageParam.replaceAll('_', ' ')}`;
 			else if (route.length === 0) route = pageParam.replaceAll('_', ' ');
+			socket.emit('pageNavigation', {
+				gameId,
+				page: pageParam,
+				route,
+				clicks: i
+			});
+		}
 
 		setTimeout(() => assignListeners(), 1);
+
+		if (i === 0) socket.emit('getRoute', gameId);
 	}
 
 	searchPage = async function () {

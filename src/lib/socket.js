@@ -10,7 +10,10 @@ let socketsListening = false;
 
 if (localStorage.getItem('name')) {
     name.set(localStorage.getItem('name'));
-    socket.emit('name', localStorage.getItem('name'));
+    socket.emit('signOn', {
+        name: localStorage.getItem('name'),
+        id: localStorage.getItem('id')
+    });
 }
 
 
@@ -41,18 +44,16 @@ function listenToSockets() {
         goto('/');
     });
 
-
-    socket.on('gameCreated', (pin) => {
-        socket.emit('join', pin);
-    });
-
     socket.on('gotoScores', (theGame) => {
         goto(`/${theGame}/scores`);
     });
 
-    socket.on("newLobby", (theGame) => {
-        socket.emit('join', theGame);
+
+    socket.on("id", (id) => {
+        localStorage.setItem('id', id);
     });
+
+    if (!localStorage.getItem('id')) socket.emit("generateId")
 }
 
 if (!socketsListening) listenToSockets();

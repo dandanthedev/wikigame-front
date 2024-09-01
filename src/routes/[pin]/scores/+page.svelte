@@ -31,6 +31,12 @@
 		//invert the order, so the least clicks are at the top
 		scores.reverse();
 
+		scores.sort((a, b) => {
+			if (a.clicks === 'DNF') return 1;
+			if (b.clicks === 'DNF') return -1;
+			return b.clicks - a.clicks;
+		});
+
 		//remove first 3 elements from array
 		notTopScores = scores.slice(3);
 
