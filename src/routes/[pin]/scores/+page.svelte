@@ -29,8 +29,14 @@
 		scores.sort((a, b) => b.clicks - a.clicks);
 
 		//remove DNF's anc save them to dnfScores
-		const dnfScores = scores.filter((score) => score.clicks === 'DNF');
-		scores = scores.filter((score) => score.clicks !== 'DNF');
+		const dnfScores = [];
+		scores.forEach((score) => {
+			if (score.clicks === 'DNF') {
+				dnfScores.push(score);
+				//remove the score from the scores array
+				scores.splice(scores.indexOf(score), 1);
+			}
+		});
 
 		//invert the order, so the least clicks are at the top
 		scores.reverse();
