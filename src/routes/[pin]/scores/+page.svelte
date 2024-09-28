@@ -33,7 +33,7 @@
 			if (score.clicks === 'DNF') {
 				dnfScores.push(score);
 				//remove the score from the scores array
-				newScores.splice(scores.indexOf(score), 1);
+				newScores.splice(newScores.indexOf(score), 1);
 			}
 		});
 
