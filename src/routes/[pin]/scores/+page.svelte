@@ -25,31 +25,27 @@
 	});
 
 	socket.on('scores', (newScores) => {
-		scores = newScores;
-		scores.sort((a, b) => b.clicks - a.clicks);
+		newScores.sort((a, b) => b.clicks - a.clicks);
 
 		//remove DNF's and save them to dnfScores
 		const dnfScores = [];
-		scores.forEach((score) => {
+		newScores.forEach((score) => {
 			if (score.clicks === 'DNF') {
 				dnfScores.push(score);
 				//remove the score from the scores array
-				scores.splice(scores.indexOf(score), 1);
+				newScores.splice(scores.indexOf(score), 1);
 			}
 		});
 
 		//invert the order, so the least clicks are at the top
-		scores.reverse();
+		newScores.reverse();
+
+		//remove first 3 elements from array
+		notTopScores = newScores.slice(3);
 
 		//add the dnfScores to the notTopScores
 		notTopScores = [...notTopScores, ...dnfScores];
-
-		//remove first 3 elements from array
-		notTopScores = scores.slice(3);
-
-		//gare svelte shit
-		scores = [...scores];
-		notTopScores = [...notTopScores];
+		scores = [...newScores];
 
 		socket.emit('getUsers', gameId);
 	});
