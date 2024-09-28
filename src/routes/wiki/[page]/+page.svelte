@@ -215,7 +215,7 @@
 
 	//block control+f
 	window.addEventListener('keydown', (e) => {
-		if (e.ctrlKey && e.key === 'f') {
+		if (e.ctrlKey && (e.key === 'f' || e.key === 'g')) {
 			e.preventDefault();
 		}
 	});
