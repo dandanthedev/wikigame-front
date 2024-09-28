@@ -38,7 +38,7 @@
 <div class="gameHeader">
 	<h1 class="gameTitle" onclick="location='/'">WikiGame</h1>
 
-	{#if inGame}
+	<!-- {#if inGame}
 		<div class="search">
 			<input
 				type="text"
@@ -58,7 +58,7 @@
 				Results will be <span style="background-color: #ffff00">highlighted</span> in the page.
 			</p>
 		</div>
-	{/if}
+	{/if} -->
 	<div class="right">
 		{#if $name && !inGame}
 			<button
@@ -81,7 +81,10 @@
 			<button
 				class="giveUp"
 				on:click={() => {
-					socket.emit('giveUp', gameId);
+					socket.emit('giveUp', {
+						id: gameId,
+						route: route
+					});
 				}}>Give up</button
 			>
 		{/if}
