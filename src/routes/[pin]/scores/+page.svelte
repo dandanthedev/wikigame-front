@@ -88,7 +88,7 @@
 {#each notTopScores as score, i}
 	<div class="score">
 		<div class="center">
-			<p class="notTopName">#{i + 1} {score.name}</p>
+			<p class="notTopName">#{i + 4} {score.name}</p>
 			<p class="clicks">Clicks: {score.clicks}</p>
 		</div>
 		<p class="route">{score.route}</p>
