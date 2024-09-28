@@ -28,7 +28,7 @@
 		scores = newScores;
 		scores.sort((a, b) => b.clicks - a.clicks);
 
-		//remove DNF's anc save them to dnfScores
+		//remove DNF's and save them to dnfScores
 		const dnfScores = [];
 		scores.forEach((score) => {
 			if (score.clicks === 'DNF') {
@@ -46,6 +46,10 @@
 
 		//remove first 3 elements from array
 		notTopScores = scores.slice(3);
+
+		//gare svelte shit
+		scores = [...scores];
+		notTopScores = [...notTopScores];
 
 		socket.emit('getUsers', gameId);
 	});
