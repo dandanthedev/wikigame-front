@@ -29,12 +29,12 @@
 
 		//remove DNF's and save them to dnfScores
 		const dnfScores = [];
-		newScores.forEach((score) => {
+
+		newScores.filter((score) => {
 			if (score.clicks === 'DNF') {
 				dnfScores.push(score);
-				//remove the score from the scores array
-				newScores.splice(newScores.indexOf(score), 1);
-			}
+				return false;
+			} else return true;
 		});
 
 		//invert the order, so the least clicks are at the top
@@ -44,7 +44,7 @@
 		notTopScores = newScores.slice(3);
 
 		//add the dnfScores to the notTopScores
-		notTopScores = [...notTopScores, ...dnfScores];
+		notTopScores = [...notTopScores];
 		scores = [...newScores];
 
 		socket.emit('getUsers', gameId);
