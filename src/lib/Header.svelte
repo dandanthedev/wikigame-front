@@ -69,6 +69,7 @@
 					if (newName) {
 						socket.emit('name', newName);
 						localStorage.setItem('name', newName);
+						$name = newName;
 					}
 				}}
 			>

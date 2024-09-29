@@ -53,6 +53,11 @@ function listenToSockets() {
         localStorage.setItem('id', id);
     });
 
+    socket.on("newSignOn", (data) => {
+        socket.disconnect();
+        goto('/disconnected');
+    });
+
     if (!localStorage.getItem('id')) socket.emit("generateId")
 }
 

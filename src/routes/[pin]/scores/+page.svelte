@@ -26,8 +26,6 @@
 
 	socket.on('scores', (newScores) => {
 		scores = newScores;
-		//remove first 3 elements from array
-		notTopScores = scores.slice(4);
 
 		socket.emit('getUsers', gameId);
 	});
@@ -53,9 +51,9 @@
 	{/if}
 	<div class="top top1">
 		<h2 class="placement">1st</h2>
-		<h3 class="name">{scores[0]?.name}</h3>
-		<p class="clicks">Clicks: {scores[0]?.clicks}</p>
-		<p class="route">{scores[0]?.route}</p>
+		<h3 class="name">{scores[0]?.name ?? 'No one'}</h3>
+		<p class="clicks">Clicks: {scores[0]?.clicks ?? '???'}</p>
+		<p class="route">{scores[0]?.route ?? '???'}</p>
 	</div>
 	{#if scores.length > 2}
 		<div class="top top3">
@@ -67,14 +65,16 @@
 	{/if}
 </div>
 
-{#each notTopScores as score, i}
-	<div class="score">
-		<div class="center">
-			<p class="notTopName">#{i + 4} {score.name}</p>
-			<p class="clicks">Clicks: {score.clicks}</p>
+{#each scores as score, i}
+	{#if i > 3}
+		<div class="score">
+			<div class="center">
+				<p class="notTopName">#{i + 1} {score.name}</p>
+				<p class="clicks">Clicks: {score.clicks}</p>
+			</div>
+			<p class="route">{score.route}</p>
 		</div>
-		<p class="route">{score.route}</p>
-	</div>
+	{/if}
 {/each}
 
 <p class="notFinished">
