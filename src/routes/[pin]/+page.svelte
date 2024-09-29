@@ -47,10 +47,16 @@
 
 	socket.on('sourceArticle', (article) => {
 		sourceArticle = article;
+
+		//clear search when lang is changed
+		if (!sourceArticle) sourceArticleSearch = '';
 	});
 
 	socket.on('destinationArticle', (article) => {
 		destinationArticle = article;
+
+		//clear search when lang is changed
+		if (!destinationArticle) destinationArticleSearch = '';
 	});
 
 	socket.on('language', (newLanguage) => {
@@ -99,17 +105,6 @@
 				socket.emit('language', {
 					pin,
 					language
-				});
-
-				sourceArticle = '';
-				destinationArticle = '';
-				socket.emit('sourceArticle', {
-					pin,
-					article: ''
-				});
-				socket.emit('destinationArticle', {
-					pin,
-					article: ''
 				});
 			}}
 		>
