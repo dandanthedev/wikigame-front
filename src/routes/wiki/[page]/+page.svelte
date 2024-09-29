@@ -97,6 +97,10 @@
 				route: `${route} -> ${pageParam.replaceAll('_', ' ')} 🏁`
 			});
 
+			//play win.mp3
+			const audio = new Audio('/win.mp3');
+			audio.play();
+
 			return;
 		}
 

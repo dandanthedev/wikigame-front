@@ -82,6 +82,10 @@
 						id: gameId,
 						route: route
 					});
+
+					//play lose.mp3
+					const audio = new Audio('/lose.mp3');
+					audio.play();
 				}}>Give up</button
 			>
 		{/if}
