@@ -59,10 +59,7 @@
 
 	async function searchWikipedia(searchTerm) {
 		const res = await fetch(
-			`https://${language}.wikipedia.org/w/api.php?action=opensearch&origin=*&format=json&formatversion=2&search=${encodeURIComponent(
-				searchTerm
-			)}
-            &namespace=0&limit=5`
+			`https://${language}.wikipedia.org/w/api.php?action=opensearch&origin=*&format=json&formatversion=2&search=${encodeURIComponent(searchTerm)}&namespace=0&limit=5`
 		);
 
 		const json = await res.json();
