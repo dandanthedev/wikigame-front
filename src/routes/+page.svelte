@@ -8,7 +8,6 @@
 	let pin = '';
 
 	socket.on('joinError', (err) => {
-		alert(err);
 		loading = false;
 	});
 </script>
