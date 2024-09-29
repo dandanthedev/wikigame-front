@@ -41,7 +41,7 @@
 			<button
 				disabled={loading}
 				on:click={() => {
-					socket.emit('host', name);
+					socket.emit('host');
 					loading = true;
 				}}>Host</button
 			>

@@ -13,6 +13,7 @@
 	let destinationArticleResults = [];
 	let sourceArticleResults = [];
 	let destinationArticleSearchInput;
+	let destinationArticleSelect;
 
 	let users = [];
 
@@ -156,6 +157,7 @@
 						article: sourceArticle
 					});
 					sourceArticleResults = [];
+					sourceArticleSearch = sourceArticle;
 				}}
 			>
 				{#each sourceArticleResults as result}
@@ -181,6 +183,7 @@
 		{#if destinationArticleResults.length > 0}
 			<select
 				bind:value={destinationArticle}
+				bind:this={destinationArticleSelect}
 				on:change={async () => {
 					const res = await fetch(
 						`https://${language}.wikipedia.org/w/api.php?redirects=1&format=json&origin=*&action=parse&prop=displaytitle&page=${encodeURIComponent(
@@ -222,9 +225,11 @@
 						});
 
 						alert(
-							'This article is a disambiguation page and is impossible to reach. Please select a more specific article.'
+							'This article is a "may refer to" page and is impossible to reach. Please select a more specific article from the list below.'
 						);
 						destinationArticleResults = await searchWikipedia(destinationArticleSearch);
+						destinationArticleSelect.focus();
+						destinationArticleSelect.click();
 						return;
 					}
 
@@ -233,6 +238,7 @@
 						article: destinationArticle
 					});
 					destinationArticleResults = [];
+					destinationArticleSearch = destinationArticle;
 				}}
 			>
 				{#each destinationArticleResults as result}

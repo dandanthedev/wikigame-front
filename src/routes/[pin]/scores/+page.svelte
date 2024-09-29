@@ -10,6 +10,7 @@
 	let host = false;
 	let users = [];
 	let nonFinishedUsers = [];
+	let started;
 
 	socket.emit('exists', gameId);
 	socket.emit('isHost', gameId);
@@ -35,6 +36,21 @@
 
 		nonFinishedUsers = users.filter((user) => !scores.find((score) => score.name === user));
 	});
+
+	socket.on('started', (time) => {
+		started = time;
+	});
+
+	function formatTime(time) {
+		const milis = time % 1000;
+		const seconds = Math.floor(time / 1000);
+		const minutes = Math.floor(seconds / 60);
+		const hours = Math.floor(minutes / 60);
+
+		if (hours > 0) return `${hours}h ${minutes % 60}m ${seconds % 60}s ${milis}ms`;
+		else if (minutes > 0) return `${minutes}m ${seconds % 60}s ${milis}ms`;
+		else return `${seconds}s ${milis}ms`;
+	}
 </script>
 
 <Header />
@@ -47,6 +63,7 @@
 			<h3 class="name">{scores[1].name}</h3>
 			<p class="clicks">Clicks: {scores[1].clicks}</p>
 			<p class="route">{scores[1].route}</p>
+			<p class="time">Time: {formatTime(scores[1].time - started)}</p>
 		</div>
 	{/if}
 	<div class="top top1">
@@ -54,6 +71,7 @@
 		<h3 class="name">{scores[0]?.name ?? 'No one'}</h3>
 		<p class="clicks">Clicks: {scores[0]?.clicks ?? '???'}</p>
 		<p class="route">{scores[0]?.route ?? '???'}</p>
+		<p class="time">Time: {formatTime(scores[0]?.time - started)}</p>
 	</div>
 	{#if scores.length > 2}
 		<div class="top top3">
@@ -61,6 +79,7 @@
 			<h3 class="name">{scores[2].name}</h3>
 			<p class="clicks">Clicks: {scores[2].clicks}</p>
 			<p class="route">{scores[2].route}</p>
+			<p class="time">Time: {formatTime(scores[2].time - started)}</p>
 		</div>
 	{/if}
 </div>
@@ -73,6 +92,7 @@
 				<p class="clicks">Clicks: {score.clicks}</p>
 			</div>
 			<p class="route">{score.route}</p>
+			<p class="time">Time: {formatTime(score.time - started)}</p>
 		</div>
 	{/if}
 {/each}
@@ -202,6 +222,12 @@
 	.clicks {
 		color: black;
 		font-size: 1rem;
+		font-family: sans-serif;
+	}
+
+	.time {
+		color: black;
+		font-size: 0.8rem;
 		font-family: sans-serif;
 	}
 
