@@ -15,17 +15,11 @@
 	let started;
 
 	onMount(() => {
-		socket.emit('exists', gameId);
-		socket.emit('isHost', gameId);
+		socket.emit('gameDetails', gameId);
 		socket.emit('scores', gameId);
-		socket.emit('getUsers', gameId);
 
 		socket.on('exists', (val) => {
 			if (!val) goto('/');
-		});
-
-		socket.on('isHost', (isHost) => {
-			host = isHost;
 		});
 
 		socket.on('scores', (newScores) => {

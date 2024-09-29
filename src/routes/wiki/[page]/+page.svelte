@@ -20,14 +20,12 @@
 
 	let route = '';
 
-	setTimeout(() => {
-		socket.emit('join', gameId);
-	}, 100); //ensure join, todo: better solution
-	setTimeout(() => {
-		socket.emit('exists', gameId);
-		socket.emit('isHost', gameId);
-		socket.emit('gameDetails', gameId);
-	}, 1000);
+	socket.emit('join', gameId);
+	socket.on('join', (pin) => {
+		if (pin !== $page.params.pin) return;
+		socket.emit('gameDetails', pin);
+	});
+
 	socket.on('exists', (val) => {
 		if (!val) goto('/');
 	});

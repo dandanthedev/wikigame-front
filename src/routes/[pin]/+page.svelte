@@ -22,12 +22,10 @@
 
 	function harrassSocket() {
 		socket.emit('join', pin);
-		setTimeout(() => {
-			socket.emit('exists', pin);
-			socket.emit('isHost', pin);
-			socket.emit('getUsers', pin);
+		socket.on('join', (pin) => {
+			if (pin !== $page.params.pin) return;
 			socket.emit('gameDetails', pin);
-		}, 1000);
+		});
 	}
 
 	socket.on('reconnect', () => harrassSocket());
