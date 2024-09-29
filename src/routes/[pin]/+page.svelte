@@ -77,10 +77,14 @@
 
 <h1 class="lobby">{pin}</h1>
 <p class="objective">
-	From {sourceArticle?.replaceAll('_', ' ') ?? 'None'} to {destinationArticle?.replaceAll(
-		'_',
-		' '
-	) ?? 'None'} ({language})
+	{#if !sourceArticle && !destinationArticle}
+		From None to None
+	{:else}
+		From {sourceArticle?.replaceAll('_', ' ') ?? 'None'} to {destinationArticle?.replaceAll(
+			'_',
+			' '
+		) ?? 'None'}
+	{/if} ({language})
 </p>
 
 <h2 class="usersHeader">Users in lobby ({users.length})</h2>
@@ -259,6 +263,8 @@
 		}}
 		disabled={!host || !sourceArticle || !destinationArticle}>Start</button
 	>
+{:else}
+	<p class="wait">Waiting for host to start the game...</p>
 {/if}
 
 <style>
@@ -372,5 +378,11 @@
 
 	.startButton:disabled {
 		background-color: #ccc;
+	}
+
+	.wait {
+		font-size: 1.5rem;
+		text-align: center;
+		font-family: sans-serif;
 	}
 </style>
