@@ -43,6 +43,10 @@
 		socket.on('started', (time) => {
 			started = time;
 		});
+
+		socket.on('noName', async () => {
+			goto('/?pin=' + pin);
+		});
 	});
 
 	function formatTime(time) {

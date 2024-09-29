@@ -57,6 +57,10 @@
 		language = newLanguage;
 	});
 
+	socket.on('noName', async () => {
+		goto('/?pin=' + pin);
+	});
+
 	async function searchWikipedia(searchTerm) {
 		const res = await fetch(
 			`https://${language}.wikipedia.org/w/api.php?action=opensearch&origin=*&format=json&formatversion=2&search=${encodeURIComponent(searchTerm)}&namespace=0&limit=5`

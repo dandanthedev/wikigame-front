@@ -8,6 +8,7 @@ const socket = io(env.PUBLIC_SOCKET_URL);
 let socketsListening = false;
 
 
+
 if (localStorage.getItem('name')) {
     name.set(localStorage.getItem('name'));
     socket.emit('signOn', {
@@ -21,10 +22,6 @@ if (localStorage.getItem('name')) {
 function listenToSockets() {
     socketsListening = true;
 
-
-    socket.on('noName', () => {
-        goto('/');
-    });
     socket.on('join', (pin) => {
         goto('/' + pin);
     });

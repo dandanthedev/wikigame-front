@@ -45,6 +45,10 @@
 		route = data.route;
 	});
 
+	socket.on('noName', async () => {
+		goto('/?pin=' + pin);
+	});
+
 	function assignListeners() {
 		//apply event listeners to all links
 		for (let a of document.body.getElementsByTagName('a')) {

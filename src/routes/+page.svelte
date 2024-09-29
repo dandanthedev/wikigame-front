@@ -1,11 +1,14 @@
 <script>
 	import Header from '$lib/Header.svelte';
 	import socket from '$lib/socket.js';
+	import { page } from '$app/stores';
 	let nameInput = '';
 	let name = localStorage.getItem('name');
 	let joining = false;
 	let loading = false;
-	let pin = '';
+	let pin = $page.url.searchParams.get('pin') ?? '';
+
+	$: name && pin && socket.emit('join', pin);
 
 	socket.on('joinError', (err) => {
 		loading = false;
@@ -19,22 +22,22 @@
 </p>
 <div class="gameControls">
 	{#if !name}
-		<div class="nameInput">
-			<form
-				on:submit|preventDefault={() => {
-					name = nameInput;
-					nameInput = '';
-					socket.emit('signOn', {
-						name,
-						id: localStorage.getItem('id')
-					});
-					localStorage.setItem('name', name);
-				}}
-			>
-				<input type="text" placeholder="Name" maxlength="20" bind:value={nameInput} />
-				<button>Continue</button>
-			</form>
-		</div>
+		<form
+			on:submit|preventDefault={() => {
+				name = nameInput;
+				nameInput = '';
+				socket.emit('signOn', {
+					name,
+					id: localStorage.getItem('id')
+				});
+				localStorage.setItem('name', name);
+			}}
+		>
+			<div class="nameInput">
+				<input type="text" placeholder="Enter your name" maxlength="20" bind:value={nameInput} />
+				<button>Start playing!</button>
+			</div>
+		</form>
 	{:else if !joining}
 		<div class="choose">
 			<button
@@ -94,6 +97,7 @@
 	.nameInput {
 		display: flex;
 		align-items: center;
+		flex-direction: column;
 		margin-right: 1rem;
 	}
 
@@ -102,7 +106,8 @@
 		border: 1px solid #ccc;
 		border-radius: 0.5rem;
 		margin-right: 1rem;
-		font-size: 1rem;
+		font-size: 1.5rem;
+		text-align: center;
 	}
 	.nameInput button {
 		padding: 0.5rem;
@@ -110,6 +115,8 @@
 		border-radius: 0.5rem;
 		margin-right: 1rem;
 		cursor: pointer;
+		width: 90%;
+		margin-top: 0.5rem;
 	}
 
 	.error {
