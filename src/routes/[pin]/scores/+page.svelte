@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { Confetti } from 'svelte-confetti';
 
 	let gameId = $page.params.pin;
 	let scores = [];
@@ -70,6 +71,9 @@
 		</div>
 	{/if}
 	<div class="top top1">
+		<Confetti x={[-0.5, 0.5]} infinite={true} />
+		<Confetti amount="10" x={[-0.75, -0.3]} y={[0.15, 0.75]} infinite={true} />
+		<Confetti amount="10" x={[0.3, 0.75]} y={[0.15, 0.75]} infinite={true} />
 		<h2 class="placement">1st</h2>
 		<h3 class="name">{scores[0]?.name ?? 'No one'}</h3>
 		<p class="clicks">Clicks: {scores[0]?.clicks ?? '???'}</p>
