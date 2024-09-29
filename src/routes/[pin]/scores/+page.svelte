@@ -3,6 +3,7 @@
 	import socket from '$lib/socket.js';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	let gameId = $page.params.pin;
 	let scores = [];
@@ -12,33 +13,35 @@
 	let nonFinishedUsers = [];
 	let started;
 
-	socket.emit('exists', gameId);
-	socket.emit('isHost', gameId);
-	socket.emit('scores', gameId);
-	socket.emit('getUsers', gameId);
-
-	socket.on('exists', (val) => {
-		if (!val) goto('/');
-	});
-
-	socket.on('isHost', (isHost) => {
-		host = isHost;
-	});
-
-	socket.on('scores', (newScores) => {
-		scores = newScores;
-
+	onMount(() => {
+		socket.emit('exists', gameId);
+		socket.emit('isHost', gameId);
+		socket.emit('scores', gameId);
 		socket.emit('getUsers', gameId);
-	});
 
-	socket.on('users', (newUsers) => {
-		users = newUsers;
+		socket.on('exists', (val) => {
+			if (!val) goto('/');
+		});
 
-		nonFinishedUsers = users.filter((user) => !scores.find((score) => score.name === user));
-	});
+		socket.on('isHost', (isHost) => {
+			host = isHost;
+		});
 
-	socket.on('started', (time) => {
-		started = time;
+		socket.on('scores', (newScores) => {
+			scores = newScores;
+
+			socket.emit('getUsers', gameId);
+		});
+
+		socket.on('users', (newUsers) => {
+			users = newUsers;
+
+			nonFinishedUsers = users.filter((user) => !scores.find((score) => score.name === user));
+		});
+
+		socket.on('started', (time) => {
+			started = time;
+		});
 	});
 
 	function formatTime(time) {
@@ -85,7 +88,7 @@
 </div>
 
 {#each scores as score, i}
-	{#if i > 3}
+	{#if i >= 3}
 		<div class="score">
 			<div class="center">
 				<p class="notTopName">#{i + 1} {score.name}</p>

@@ -76,15 +76,15 @@
 <Header gameId={pin} lobby={true} />
 
 <h1 class="lobby">{pin}</h1>
-
-<h2 class="usersHeader">Users in lobby</h2>
-<p class="users">{users.join(', ')}</p>
-
-<h2 class="objectiveHeader">Objective</h2>
 <p class="objective">
-	{sourceArticle?.replaceAll('_', ' ') ?? 'None'} to {destinationArticle?.replaceAll('_', ' ') ??
-		'None'} ({language})
+	From {sourceArticle?.replaceAll('_', ' ') ?? 'None'} to {destinationArticle?.replaceAll(
+		'_',
+		' '
+	) ?? 'None'} ({language})
 </p>
+
+<h2 class="usersHeader">Users in lobby ({users.length})</h2>
+<p class="users">{users.join(', ')}</p>
 
 {#if host}
 	<div class="language">
@@ -288,6 +288,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		margin-top: 1rem;
 	}
 
 	.sourceArticle input {
@@ -339,6 +340,8 @@
 		font-size: 1.3rem;
 		text-align: center;
 		font-family: sans-serif;
+		max-width: 60rem;
+		margin: 0 auto;
 	}
 
 	.usersHeader {
@@ -347,16 +350,11 @@
 		font-family: sans-serif;
 	}
 
-	.objectiveHeader {
-		font-size: 1.5rem;
-		text-align: center;
-		font-family: sans-serif;
-	}
-
 	.objective {
-		font-size: 1.3rem;
+		font-size: 1.4rem;
+		margin-bottom: 1rem;
 		text-align: center;
-		font-family: sans-serif;
+		font-family: sans-serif !important;
 	}
 
 	.startButton {
