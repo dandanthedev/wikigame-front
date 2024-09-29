@@ -4,10 +4,6 @@
 	import { goto } from '$app/navigation';
 	export let inGame = false;
 	export let i = 0;
-	export let loading = true;
-	export let searchedThisPage = false;
-	export let searchTerm;
-	export let searchPage = null;
 	export let destinationArticle = '';
 	export let route = '';
 	export let gameId;
