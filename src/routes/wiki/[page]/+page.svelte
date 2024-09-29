@@ -96,6 +96,8 @@
 				clicks: i,
 				route: `${route} -> ${pageParam.replaceAll('_', ' ')} 🏁`
 			});
+
+			return;
 		}
 
 		const response = await fetch(url);
