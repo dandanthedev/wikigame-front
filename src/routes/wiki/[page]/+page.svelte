@@ -22,7 +22,6 @@
 
 	socket.emit('join', gameId);
 	socket.on('join', (pin) => {
-		if (pin !== $page.params.pin) return;
 		socket.emit('gameDetails', pin);
 	});
 
