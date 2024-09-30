@@ -249,10 +249,6 @@
 	<button
 		class="startButton"
 		on:click={() => {
-			socket.emit('language', {
-				pin,
-				language
-			});
 			socket.emit('start', pin);
 		}}
 		disabled={!host || !sourceArticle || !destinationArticle}>Start</button
