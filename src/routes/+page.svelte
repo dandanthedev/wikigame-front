@@ -11,7 +11,7 @@
 
 	$: name && pin && pinFromURL && socket.emit('join', pin);
 
-	socket.on('joinError', (err) => {
+	socket.on('joinError', () => {
 		loading = false;
 	});
 </script>
