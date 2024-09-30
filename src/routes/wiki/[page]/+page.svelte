@@ -21,9 +21,6 @@
 	let route = '';
 
 	socket.emit('join', gameId);
-	socket.on('join', (pin) => {
-		socket.emit('gameDetails', pin);
-	});
 
 	socket.on('exists', (val) => {
 		if (!val) goto('/');
@@ -196,7 +193,10 @@
 
 		setTimeout(() => assignListeners(), 1);
 
-		if (i === 0) socket.emit('getRoute', gameId);
+		if (i === 0) {
+			socket.emit('getRoute', gameId);
+			socket.emit('gameDetails', gameId);
+		}
 	}
 
 	searchPage = async function () {
