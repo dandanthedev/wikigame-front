@@ -45,20 +45,19 @@
 
 	socket.on('sourceArticle', (article) => {
 		sourceArticle = article;
-
-		//clear search when lang is changed
-		if (!sourceArticle) sourceArticleSearch = '';
 	});
 
 	socket.on('destinationArticle', (article) => {
 		destinationArticle = article;
-
-		//clear search when lang is changed
-		if (!destinationArticle) destinationArticleSearch = '';
 	});
 
 	socket.on('language', (newLanguage) => {
 		language = newLanguage;
+
+		sourceArticle = '';
+		destinationArticle = '';
+		sourceArticleSearch = '';
+		destinationArticleSearch = '';
 	});
 
 	socket.on('noName', async () => {
@@ -226,8 +225,6 @@
 							'This article is a "may refer to" page and is impossible to reach. Please select a more specific article from the list below.'
 						);
 						destinationArticleResults = await searchWikipedia(destinationArticleSearch);
-						destinationArticleSelect.focus();
-						destinationArticleSelect.click();
 						return;
 					}
 
