@@ -6,9 +6,10 @@
 	let name = localStorage.getItem('name');
 	let joining = false;
 	let loading = false;
+	const pinFromURL = $page.url.searchParams.get('pin') ? true : false;
 	let pin = $page.url.searchParams.get('pin') ?? '';
 
-	$: name && pin && socket.emit('join', pin);
+	$: name && pin && pinFromURL && socket.emit('join', pin);
 
 	socket.on('joinError', (err) => {
 		loading = false;
