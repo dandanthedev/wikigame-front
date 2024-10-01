@@ -220,12 +220,12 @@
 
 	loadPage();
 
-	//block control+f
-	window.addEventListener('keydown', (e) => {
-		if (e.ctrlKey && (e.key === 'f' || e.key === 'g')) {
-			e.preventDefault();
-		}
-	});
+	// //block control+f
+	// window.addEventListener('keydown', (e) => {
+	// 	if (e.ctrlKey && (e.key === 'f' || e.key === 'g')) {
+	// 		e.preventDefault();
+	// 	}
+	// });
 
 	//block right click
 	window.addEventListener('contextmenu', (e) => {
