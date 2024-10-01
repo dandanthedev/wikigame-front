@@ -14,6 +14,8 @@
 	let nonFinishedUsers = [];
 	let started;
 
+	let sortMode = 'default'; //default or time
+
 	onMount(() => {
 		socket.emit('gameDetails', gameId);
 		socket.emit('scores', gameId);
@@ -24,6 +26,7 @@
 
 		socket.on('scores', (newScores) => {
 			scores = newScores;
+			if (sortMode === 'time') scores.sort((a, b) => a.time - b.time);
 
 			socket.emit('getUsers', gameId);
 		});
@@ -57,6 +60,16 @@
 
 <Header />
 
+<select
+	bind:value={sortMode}
+	class="sortMode"
+	on:change={() => {
+		socket.emit('scores', gameId);
+	}}
+>
+	<option value="default">Clicks</option>
+	<option value="time">Time</option>
+</select>
 <h1 class="scoresHeader">Scores</h1>
 <div class="topScores">
 	{#if scores.length > 1}
@@ -122,6 +135,14 @@
 >
 
 <style>
+	.sortMode {
+		font-size: 1.3rem;
+		margin-bottom: 1rem;
+		max-width: 20rem;
+		display: block;
+		margin: 0 auto;
+		margin-top: 1rem;
+	}
 	.scoresHeader {
 		font-size: 1.5rem;
 		text-align: center;

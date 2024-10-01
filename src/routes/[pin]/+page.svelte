@@ -53,11 +53,6 @@
 
 	socket.on('language', (newLanguage) => {
 		language = newLanguage;
-
-		sourceArticle = '';
-		destinationArticle = '';
-		sourceArticleSearch = '';
-		destinationArticleSearch = '';
 	});
 
 	socket.on('noName', async () => {
