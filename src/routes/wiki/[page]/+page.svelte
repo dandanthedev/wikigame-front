@@ -89,11 +89,7 @@
 		}
 
 		if (pageParam === destinationArticle) {
-			socket.emit('score', {
-				gameId,
-				clicks: i,
-				route: `${route} -> ${pageParam.replaceAll('_', ' ')} 🏁`
-			});
+			socket.emit('score', gameId);
 
 			//play win.mp3
 			const audio = new Audio('/win.mp3');
@@ -181,13 +177,11 @@
 		loading = false;
 
 		if (updateRoute) {
-			if (route.length > 0) route = `${route} -> ${pageParam.replaceAll('_', ' ')}`;
-			else if (route.length === 0) route = pageParam.replaceAll('_', ' ');
+			if (route?.length > 0) route = `${route} -> ${pageParam.replaceAll('_', ' ')}`;
+			else if (route?.length === 0) route = pageParam.replaceAll('_', ' ');
 			socket.emit('pageNavigation', {
 				gameId,
-				page: pageParam,
-				route,
-				clicks: i
+				page: pageParam
 			});
 		}
 
