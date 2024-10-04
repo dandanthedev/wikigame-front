@@ -111,6 +111,7 @@
 			placeholder="Source article"
 			bind:value={sourceArticleSearch}
 			on:keyup={async (e) => {
+				sourceArticle = null;
 				const curVal = e.target.value;
 				setTimeout(async () => {
 					if (curVal !== sourceArticleSearch) return;
@@ -165,6 +166,7 @@
 			bind:value={destinationArticleSearch}
 			bind:this={destinationArticleSearchInput}
 			on:keyup={async (e) => {
+				destinationArticle = null;
 				const curVal = e.target.value;
 				setTimeout(async () => {
 					if (curVal !== destinationArticleSearch) return;
