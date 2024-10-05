@@ -222,7 +222,7 @@
 						});
 
 						alert(
-							'This article is a "may refer to" page and is impossible to reach. Please select a more specific article from the list below.'
+							'This article is a "may refer to" page, which you can\'t navigate to. Please reselect the dropdown and pick a more specific article (one in brackets)'
 						);
 						destinationArticleResults = await searchWikipedia(destinationArticleSearch);
 						return;
