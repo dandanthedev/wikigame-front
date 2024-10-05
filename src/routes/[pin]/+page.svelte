@@ -54,8 +54,11 @@
 	socket.on('language', (newLanguage) => {
 		language = newLanguage;
 	});
-
 	socket.on('noName', async () => {
+		if (localStorage.getItem('name')) {
+			socket.emit('name', localStorage.getItem('name'));
+			socket.emit('id', localStorage.getItem('id'));
+		}
 		goto('/?pin=' + pin);
 	});
 

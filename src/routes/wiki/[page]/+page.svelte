@@ -40,6 +40,10 @@
 	});
 
 	socket.on('noName', async () => {
+		if (localStorage.getItem('name')) {
+			socket.emit('name', localStorage.getItem('name'));
+			socket.emit('id', localStorage.getItem('id'));
+		}
 		goto('/?pin=' + pin);
 	});
 
@@ -240,6 +244,19 @@
 	bind:route
 	bind:gameId
 />
+
+<button
+	on:click={() => {
+		socket.emit('pageNavigation', {
+			gameId,
+			page: 'Dit bestaat niet',
+			redirectedFrom: null
+		});
+	}}
+>
+	broadcast false navigation
+</button>
+
 {#if processedPage && !loading && !err}
 	<h1>{pageParam.replaceAll('_', ' ')}</h1>
 	<div class="gameContent">
