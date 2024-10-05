@@ -50,6 +50,41 @@ function listenToSockets() {
         localStorage.setItem('id', id);
     });
 
+    socket.on('checkNavigation', async (data) => {
+        let { id, from, to, lang, redirectedFrom } = data;
+
+
+        //check if redirect is valid
+        if (redirectedFrom) {
+            const redCheck = await fetch(
+                `https://${lang}.wikipedia.org/w/api.php?redirects=1&format=json&origin=*&action=parse&prop=displaytitle&page=${redirectedFrom}`
+            );
+            const redCheckData = await redCheck.json();
+
+            if (redCheckData?.parse?.redirects?.length > 0) {
+                const last = redCheckData?.parse?.redirects[redCheckData.parse.redirects.length - 1];
+                const redirectedTarget = last.to.replaceAll(' ', '_');
+                if (redirectedTarget !== to) return socket.emit('checkNavigation', { id, result: false });
+            }
+        }
+
+        const url = `https://api.wikimedia.org/core/v1/wikipedia/${lang}/page/${from}/with_html?redirects=0&disableeditsection=true`
+        const response = await fetch(url);
+        const json = await response.json();
+        const html = json.html;
+        if (!html) return socket.emit('checkNavigation', { id, error: true });
+        if (!html.includes(`./${to}`) && !html.includes(`/${redirectedFrom}`))
+            socket.emit('checkNavigation', {
+                id,
+                result: false
+            });
+        else socket.emit('checkNavigation', { id, result: true });
+    });
+
+    socket.on("cheater", () => {
+        socket.disconnect();
+        goto("/cheater");
+    });
 
     if (!localStorage.getItem('id')) socket.emit("generateId")
 }

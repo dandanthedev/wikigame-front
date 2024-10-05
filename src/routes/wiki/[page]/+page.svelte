@@ -61,13 +61,13 @@
 		}
 	}
 
-	function getURL() {
-		return `https://api.wikimedia.org/core/v1/wikipedia/${lang}/page/${pageParam}/with_html?redirects=0&disableeditsection=true`;
+	function getURL(overridePage) {
+		return `https://api.wikimedia.org/core/v1/wikipedia/${lang}/page/${overridePage || pageParam}/with_html?redirects=0&disableeditsection=true`;
 	}
 	let url = getURL();
 	let processedPage;
 
-	async function loadPage(updateRoute = true) {
+	async function loadPage(updateRoute = true, redirectedFrom) {
 		//reset variables
 		err = false;
 		searchedThisPage = false;
@@ -82,9 +82,10 @@
 
 		if (redCheckData?.parse?.redirects?.length > 0) {
 			const last = redCheckData?.parse?.redirects[redCheckData.parse.redirects.length - 1];
+			const pageParamBak = pageParam;
 			pageParam = last.to.replaceAll(' ', '_');
 			url = getURL();
-			loadPage(true);
+			loadPage(true, pageParamBak);
 			return;
 		}
 
@@ -181,7 +182,8 @@
 			else if (route?.length === 0) route = pageParam.replaceAll('_', ' ');
 			socket.emit('pageNavigation', {
 				gameId,
-				page: pageParam
+				page: pageParam,
+				redirectedFrom: redirectedFrom || null
 			});
 		}
 
