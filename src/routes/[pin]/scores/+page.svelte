@@ -17,6 +17,9 @@
 	let sortMode = 'default'; //default or time
 
 	onMount(() => {
+		const audio = new Audio('/win.mp3');
+		audio.play();
+
 		socket.emit('gameDetails', gameId);
 		socket.emit('scores', gameId);
 

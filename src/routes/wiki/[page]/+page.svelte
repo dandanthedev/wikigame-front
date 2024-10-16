@@ -93,16 +93,6 @@
 			return;
 		}
 
-		if (pageParam === destinationArticle) {
-			socket.emit('score', gameId);
-
-			//play win.mp3
-			const audio = new Audio('/win.mp3');
-			audio.play();
-
-			return;
-		}
-
 		const response = await fetch(url);
 		const data = await response.json();
 
