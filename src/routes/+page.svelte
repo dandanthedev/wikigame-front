@@ -2,17 +2,33 @@
 	import Header from '$lib/Header.svelte';
 	import socket from '$lib/socket.js';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 	let nameInput = '';
 	let name = localStorage.getItem('name');
+	let dontShowStreamers = localStorage.getItem('dontShowStreamers');
 	let joining = false;
 	let loading = false;
 	const pinFromURL = $page.url.searchParams.get('pin') ? true : false;
 	let pin = $page.url.searchParams.get('pin') ?? '';
+	let streamers = [];
+	let host;
 
 	$: name && pin && pinFromURL && socket.emit('join', pin);
 
 	socket.on('joinError', () => {
 		loading = false;
+	});
+
+	socket.on('streamers', (data) => {
+		streamers = data;
+		console.log(streamers);
+	});
+
+	onMount(() => {
+		if (dontShowStreamers) return;
+		host = window.location.host.split(':')[0];
+		console.log(host);
+		socket.emit('streamers');
 	});
 </script>
 
@@ -69,6 +85,29 @@
 		</div>
 	{/if}
 </div>
+<br />
+
+{#if !dontShowStreamers && streamers.length > 0}
+	<button
+		on:click={() => {
+			localStorage.setItem('dontShowStreamers', true);
+			dontShowStreamers = true;
+		}}
+		class="dontShowStreamers">Don't show streamers</button
+	>
+	<br />
+	<div class="streamers">
+		{#each streamers as streamer (streamer)}
+			<iframe
+				src={`https://player.twitch.tv/?channel=${streamer}&parent=${host}`}
+				frameborder="0"
+				allowfullscreen="true"
+				scrolling="no"
+				title="Streamer"
+			></iframe>
+		{/each}
+	</div>
+{/if}
 
 <style>
 	.gameTitle {
@@ -161,5 +200,29 @@
 		border-radius: 0.5rem;
 		margin-right: 1rem;
 		cursor: pointer;
+	}
+
+	.dontShowStreamers {
+		font-size: 1.5rem;
+		border: 1px solid #ccc;
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		margin-right: 1rem;
+		cursor: pointer;
+		margin: 0 auto;
+		display: block;
+	}
+
+	.streamers {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+	}
+	.streamers iframe {
+		/*small screens*/
+		width: 400px;
+		height: 225px;
 	}
 </style>
